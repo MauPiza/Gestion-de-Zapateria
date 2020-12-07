@@ -9,6 +9,7 @@ package views;
  *
  * @author Hp
  */
+
 public class Registro_v extends javax.swing.JFrame {
 
     /**
