@@ -20,12 +20,13 @@ public class mainMenu extends javax.swing.JFrame {
         bajaArticulo_btn = new javax.swing.JButton();
         consultaInventarioPorArticulo_btn = new javax.swing.JButton();
         registroVentas_btn = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("mainframe"); // NOI18N
         setResizable(false);
 
-        backgroundPanel.setBackground(new java.awt.Color(102, 102, 102));
+        backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
         backgroundPanel.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
 
         Header.setBackground(new java.awt.Color(51, 51, 51));
@@ -76,6 +77,11 @@ public class mainMenu extends javax.swing.JFrame {
         verArticulos_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Consulta de artículo por catálogo2.png"))); // NOI18N
         verArticulos_btn.setToolTipText("Consulta de artículos por catálogo");
         verArticulos_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        verArticulos_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verArticulos_btnActionPerformed(evt);
+            }
+        });
 
         bajaArticulo_btn.setBackground(new java.awt.Color(255, 99, 54));
         bajaArticulo_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -92,11 +98,23 @@ public class mainMenu extends javax.swing.JFrame {
         consultaInventarioPorArticulo_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/boxes.png"))); // NOI18N
         consultaInventarioPorArticulo_btn.setToolTipText("Consulta total de inventario");
         consultaInventarioPorArticulo_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        consultaInventarioPorArticulo_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaInventarioPorArticulo_btnActionPerformed(evt);
+            }
+        });
 
         registroVentas_btn.setBackground(new java.awt.Color(102, 51, 255));
         registroVentas_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sales.png"))); // NOI18N
         registroVentas_btn.setToolTipText("Registro de venta");
         registroVentas_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        registroVentas_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registroVentas_btnActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jupiter.png"))); // NOI18N
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
@@ -105,16 +123,22 @@ public class mainMenu extends javax.swing.JFrame {
             .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(actualizacionExistencia_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bajaArticulo_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(altaArticulos_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(altaArticulos_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(consultaInventarioPorArticulo_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(registroVentas_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(verArticulos_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(consultaInventarioPorArticulo_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(verArticulos_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(registroVentas_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,18 +146,22 @@ public class mainMenu extends javax.swing.JFrame {
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(consultaInventarioPorArticulo_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(altaArticulos_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bajaArticulo_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addComponent(altaArticulos_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bajaArticulo_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(actualizacionExistencia_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(consultaInventarioPorArticulo_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(verArticulos_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(registroVentas_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(actualizacionExistencia_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(registroVentas_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,6 +195,24 @@ public class mainMenu extends javax.swing.JFrame {
         deleteArticles.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bajaArticulo_btnActionPerformed
+
+    private void registroVentas_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroVentas_btnActionPerformed
+        salesRegister_form salesRegister = new salesRegister_form();
+        salesRegister.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_registroVentas_btnActionPerformed
+
+    private void verArticulos_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verArticulos_btnActionPerformed
+        viewArticlesByCatalogue viewArticles = new viewArticlesByCatalogue();
+        viewArticles.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_verArticulos_btnActionPerformed
+
+    private void consultaInventarioPorArticulo_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaInventarioPorArticulo_btnActionPerformed
+        Inventory inventory = new Inventory();
+        inventory.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_consultaInventarioPorArticulo_btnActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -209,6 +255,7 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JButton bajaArticulo_btn;
     private javax.swing.JButton consultaInventarioPorArticulo_btn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton registroVentas_btn;
     private javax.swing.JButton verArticulos_btn;
     // End of variables declaration//GEN-END:variables

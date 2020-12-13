@@ -62,10 +62,12 @@ public class deleteArticle_form extends javax.swing.JFrame {
         jLabel2.setText("Código de producto:");
 
         idfield.setFont(new java.awt.Font("Humnst777 Lt BT", 0, 14)); // NOI18N
+        idfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel3.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
         jLabel3.setText("Tipo de producto:");
 
+        nameField.setEditable(false);
         nameField.setFont(new java.awt.Font("Humnst777 Lt BT", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("JetBrains Mono", 1, 14)); // NOI18N
@@ -181,17 +183,15 @@ public class deleteArticle_form extends javax.swing.JFrame {
     }//GEN-LAST:event_catalogue_cmboxItemStateChanged
 
     private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
-        
-        ImageIcon i =  new ImageIcon(getClass().getResource("../images/Delete.png"));
-        int confirmDelete = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas"
-                + " eliminar el producto?","Eliminar producto de la base de datos", WIDTH, HEIGHT,i);
-        if (confirmDelete == 0) {
-            try {
-            articleImplementation.delete(Integer.valueOf(idfield.getText()));
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Campo obligatorio \n Debes ingresar un valor numérico");
-                System.out.println("Error has been detected. Error: " + e.getMessage());
+        try{
+            ImageIcon i =  new ImageIcon(getClass().getResource("../images/Delete.png"));
+            int confirmDelete = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas"
+                    + " eliminar el producto?","Eliminar producto de la base de datos", WIDTH, HEIGHT,i);
+            if (confirmDelete == 0) {
+                articleImplementation.delete(Integer.valueOf(idfield.getText()));
             }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Debes ingresar solo caracteres numéricos");
         }
         restoreFields();
     }//GEN-LAST:event_delete_btnActionPerformed
@@ -203,10 +203,13 @@ public class deleteArticle_form extends javax.swing.JFrame {
     }//GEN-LAST:event_home_btnActionPerformed
 
     private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_btnActionPerformed
-        //TODO: implements the method readOne
-        nameField.setText(articleImplementation.readOne(Integer.valueOf(idfield.getText())).getName_article());
-        catalogue_cmbox.setSelectedIndex(articleImplementation.readOne(Integer.valueOf(idfield.getText())).getId_catalogue());
-        
+        try{
+            nameField.setText(articleImplementation.readOne(Integer.valueOf(idfield.getText())).getName_article());
+            catalogue_cmbox.setSelectedIndex(articleImplementation.readOne(Integer.valueOf(idfield.getText())).getId_catalogue());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Debes ingresar solo caracteres numéricos");
+            restoreFields();
+        }
     }//GEN-LAST:event_search_btnActionPerformed
 
     public static void main(String args[]) {

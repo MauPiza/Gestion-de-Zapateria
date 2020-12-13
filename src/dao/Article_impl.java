@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class Article_impl implements DAO_Article{
     Catalogue catalogueClass = new Catalogue();
     DBHelper helper = new DBHelper();
+    List <Article> articleList = new ArrayList();
     
     @Override
     public boolean create(Article article) {
@@ -54,13 +55,15 @@ public class Article_impl implements DAO_Article{
             if (helper.connect()) {
              
                 StringBuilder query = new StringBuilder();
-                query.append("SELECT name_article, id_catalogue FROM article WHERE id_article = ");
+                query.append("SELECT * FROM article WHERE id_article = ");
                 query.append(id_article).append(";");
                 
-                ResultSet rs = (ResultSet)helper.execute(query.toString(), false);
+                ResultSet rs = (ResultSet)helper.execute(query.toString(), false);               
                 if(rs.next()){
                     article.setName_article(rs.getString("name_article")); 
                     article.setId_catalogue(rs.getInt("id_catalogue"));
+                    article.setPrice(rs.getDouble("price"));
+                    article.setExistance(rs.getInt("existence"));
                 }else{
                     JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
                 }
@@ -87,10 +90,11 @@ public class Article_impl implements DAO_Article{
                 query.append("id_catalogue = ").append(article.getId_catalogue()).append(",");
                 query.append("name_article = '").append(article.getName_article()).append("',");
                 query.append("price = ").append(article.getPrice()).append(",");
-                query.append("existance =").append(article.getExistance());
+                query.append("existence =").append(article.getExistance());
                 query.append(" WHERE id_article = ").append(id_article).append(";");
             
                 helper.execute(query.toString(), true);
+                JOptionPane.showMessageDialog(null, "Producto actualizado");
                 return true;
             }else{
                 JOptionPane.showMessageDialog(null, "No es posible establecer conexión con"
@@ -114,9 +118,6 @@ public class Article_impl implements DAO_Article{
                 StringBuilder query = new StringBuilder();
                 query.append("DELETE FROM article WHERE id_article = ").append(id_article).append(";");
                 helper.execute(query.toString(), true);
-                if (true) {
-                    
-                }
                 JOptionPane.showMessageDialog(null, "Se ha eliminado un elemento de la base de datos "
                         + "con el ID: " + id_article);
                 return true;
@@ -136,12 +137,12 @@ public class Article_impl implements DAO_Article{
 
     @Override
     public List<Article> getAllArticles() {
-        List <Article> articleList = new ArrayList();
+        articleList = new ArrayList();
         
         try {
             if (helper.connect()) {
                 StringBuilder query = new StringBuilder();
-                query.append("SELECT * FROM articles");
+                query.append("SELECT * FROM article");
                 ResultSet rs = (ResultSet) helper.execute(query.toString(), false);
                 while (rs.next()) {        
                     Article article = new Article();
@@ -149,8 +150,8 @@ public class Article_impl implements DAO_Article{
                     article.setId_article(rs.getInt("id_article"));
                     article.setId_catalogue(rs.getInt("id_catalogue"));
                     article.setName_article(rs.getString("name_article"));
-                    article.setPrice(rs.getInt("price"));
-                    article.setExistance(rs.getInt("existance"));
+                    article.setPrice(rs.getDouble("price"));
+                    article.setExistance(rs.getInt("existence"));
                     
                     articleList.add(article);
                 }
@@ -158,33 +159,23 @@ public class Article_impl implements DAO_Article{
                 System.out.println("No es posible conectarse a la base de datos ");
             }
         } catch (SQLException e) {
-            System.out.println("Error has been ocurred " + helper.getMensajeError());
+            System.out.println("Error has been ocurred: " + e.getSQLState());
+        }finally{
+            helper.disconnect();
         }
         
         return articleList;
     }
-    
-    //Check if the stock of the catalog is available
-    private boolean  isAvailableStock(){
-        boolean available;
-        if (catalogueClass.getStock().size() >= 0 && catalogueClass.getStock().size()<= 30) {
-            available = true;
-            return available;
-        }else{
-            available = false;
-            return available;
-        }
-    }
 
     @Override
     public List<Article> getBy(String column, String data) {
-        List<Article> articleList = new ArrayList();
+        articleList = new ArrayList();
         
         try {
             if (helper.connect()) {
                 StringBuilder query = new StringBuilder();
                 query.append("SELECT * FROM articles WHERE ");
-                if (column.equals("id_article") || column.equals("id_catalogue") || column.equals("existance") || column.endsWith("price") ) {
+                if (column.equals("id_article") || column.equals("id_catalogue") || column.equals("existence") || column.endsWith("price") ) {
                     query.append(column).append(" = ").append(data);
                 }else if (column.equals("name_article")) {
                     query.append("LIKE '%").append(data).append("%'");
@@ -197,7 +188,7 @@ public class Article_impl implements DAO_Article{
                     article.setId_catalogue(rs.getInt("id_catalogue"));
                     article.setName_article(rs.getString("name_article"));
                     article.setPrice(rs.getInt("price"));
-                    article.setExistance(rs.getInt("existance"));
+                    article.setExistance(rs.getInt("existence"));
                     
                     articleList.add(article);
                 }
@@ -210,6 +201,70 @@ public class Article_impl implements DAO_Article{
         
         return articleList;
     }
-    
-    
+
+    @Override
+    public boolean stockAvailable(int id_catalogue) {
+        /*
+        try {
+            if (helper.connect()) {
+                
+                StringBuilder query = new StringBuilder();
+                query.append("SELECT COUNT(*) AS 'Total' FROM article WHERE id_catalogue = ")
+                .append(id_catalogue).append(";");
+                ResultSet rs = (ResultSet) helper.execute(query.toString(), false);
+                
+                if (rs.get) {
+                    int stockTotal = rs.getInt("Total");
+                    if (stockTotal <=30) {
+                        System.out.println("Stock remmaining: " + stockTotal);
+                        return true;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Has alcanzado el límite de artículos"
+                                    + " en este catálogo (30 artículos)");
+                            return false;
+                        }
+                    }
+                }else{
+                    System.out.println("No es posible conectarse a la base de datos ");
+                }
+            } catch (Exception e) {
+                System.out.println("Error has been ocurred: " + e.getMessage());
+            }finally{
+                helper.disconnect();
+            }
+        */
+        return false;
+        
+    }
+
+    @Override
+    public List<Article> getByCatalogue(int id_catalogue) {
+
+        try {
+            if (helper.connect()) {
+                StringBuilder query = new StringBuilder();
+                query.append("SELECT * FROM article WHERE id_catalogue = ").append(id_catalogue);
+                ResultSet rs = (ResultSet) helper.execute(query.toString(), false);
+                while (rs.next()) {        
+                    Article article = new Article();
+                    
+                    article.setId_article(rs.getInt("id_article"));
+                    article.setId_catalogue(rs.getInt("id_catalogue"));
+                    article.setName_article(rs.getString("name_article"));
+                    article.setPrice(rs.getDouble("price"));
+                    article.setExistance(rs.getInt("existence"));
+                    
+                    articleList.add(article);
+                }
+            }else{
+                System.out.println("No es posible conectarse a la base de datos ");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error has been ocurred: " + e.getSQLState());
+        }finally{
+            helper.disconnect();
+        }
+        
+        return articleList;
+    }
 }

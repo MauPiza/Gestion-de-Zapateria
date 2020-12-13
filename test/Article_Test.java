@@ -1,6 +1,8 @@
 import dao.Article_impl;
 import entities.Article;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import junit.framework.Assert;
 import static junit.framework.Assert.assertEquals;
 import org.junit.Test;
@@ -30,10 +32,21 @@ public class Article_Test {
     }
     
     @Test
-    public void shouldFindAnArticle(){
-        Article_impl articleImplements = new Article_impl();
-        assertEquals("Should return true", true, articleImplements.readOne(3));
+    public void shouldReturnIDArticles(){
+        Article_impl implementation = new Article_impl();
+        List<Article> list = implementation.getAllArticles();
+        list.forEach(a -> {
+            System.out.println("ID: " + a.getId_article());
+        });
     }
+    
+//    @Test
+//    public void shouldReturnIfWeCanAddOrNotAnotherArticleToStock(){
+//        Article_impl impl = new Article_impl();
+//        Assert.assertTrue("Space is OK, it should return true", impl.stockAvailable(2));
+//    }
+    
+    //Q U E R I E S    S T R U C T U R E S    A B O V E
     
     @Test
     public void validateStructureOfQueryAdd(){
@@ -43,7 +56,7 @@ public class Article_Test {
         article.setPrice(500);
         article.setExistance(10);
         StringBuilder query = new StringBuilder();
-            query.append("INSERT INTO article (id_article,id_catalogue,name_article,price,existance)")
+            query.append("INSERT INTO article (id_article,id_catalogue,name_article,price,existence)")
             .append("VALUES (");
             query.append("NULL,");
             query.append(article.getId_catalogue()).append(",");
@@ -58,12 +71,12 @@ public class Article_Test {
     }
     
     @Test
-    public void validateStrucuteOfQueryFindOne() throws SQLException{
+    public void validateStructureOfQueryFindOne() throws SQLException{
         
         int id_article = 3;
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM article WHERE id_article =");
-        query.append(id_article + ";");
+        query.append(id_article).append(";");
         System.out.println("SELECT query: " + query.toString());
     }
     
@@ -80,7 +93,7 @@ public class Article_Test {
         query.append("id_catalogue = ").append(article.getId_catalogue()).append(",");
         query.append("name_article = '").append(article.getName_article()).append("',");
         query.append("price = ").append(article.getPrice()).append(",");
-        query.append("existance = ").append(article.getExistance());
+        query.append("existence = ").append(article.getExistance());
         query.append(" WHERE id_article = ").append(3).append(";");
         System.out.println("UPDATE query: " + query.toString());
     }
@@ -95,4 +108,12 @@ public class Article_Test {
         System.out.println("DELETE query: " + query.toString());
     }
     
+    @Test
+    public void validateStructureOfQueryCount(){
+        int id_catalogue = 2;
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT COUNT(*) FROM article WHERE id_catalogue = ")
+        .append(id_catalogue).append(";");
+        System.out.println("Query Count: = " + query.toString());
+    }
 }

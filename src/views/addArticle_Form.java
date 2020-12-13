@@ -244,7 +244,6 @@ public class addArticle_Form extends javax.swing.JFrame {
         main.setVisible(true);
         this.setVisible(false);
         
-        //TODO: when the CRUD are functioning, validate to cancel the operation
     }//GEN-LAST:event_home_btnActionPerformed
 
     private void undo_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undo_btnActionPerformed
@@ -256,14 +255,22 @@ public class addArticle_Form extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona un catálogo válido");
         }else{
             try{
-                Article article = new Article();
-                article.setName_article(nameField.getText());
-                article.setPrice(Double.parseDouble(salePriceField.getText()));
-                article.setExistance(sliderExistence.getValue());
-                article.setId_catalogue(catalogue_cmbox.getSelectedIndex());
+                if (catalogue_cmbox.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Elije un catálogo válido");
+                }else{
+                    
+                    Article article = new Article();
+                    article.setName_article(nameField.getText());
+                    article.setPrice(Double.parseDouble(salePriceField.getText()));
+                    article.setExistance(sliderExistence.getValue());
+                    article.setId_catalogue(catalogue_cmbox.getSelectedIndex());
 
-                articleImplementation.create(article);
-                restoreFields();
+                    articleImplementation.create(article);
+                    restoreFields();
+                }
+                //if (articleImplementation.stockAvailable(catalogue_cmbox.getSelectedIndex())) {
+                    
+                //}
             }catch(NumberFormatException e){
                 System.out.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "No puedes ingresar caracteres alfanuméricos en "
@@ -309,16 +316,16 @@ public class addArticle_Form extends javax.swing.JFrame {
     public void setImagetoLabel(int item){
         item = catalogue_cmbox.getSelectedIndex();
         switch(item){
-            case 0:
+            case 1:
                 setImagetoLabel("../images/tacon_G.png");
                 break;
-            case 1:
+            case 2:
                 setImagetoLabel("../images/bota_G.png");
                 break;
-            case 2:
+            case 3:
                 setImagetoLabel("../images/zapatillas_G.png");
                 break;
-            case 3:
+            case 4:
                 setImagetoLabel("../images/sandalias_G.png");
                 break;
         }

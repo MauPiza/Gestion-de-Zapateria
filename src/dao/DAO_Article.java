@@ -10,5 +10,8 @@ public interface DAO_Article {
     public boolean delete(int id_article);
     
     public List<Article> getBy(String column, String data);
+    public List<Article> getByCatalogue(int id_catalogue);
     public List<Article> getAllArticles();
+    
+    public boolean stockAvailable(int id_catalogue);
 }
